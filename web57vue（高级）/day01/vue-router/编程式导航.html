@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+    <script src="../vue-router.js"></script>
+</head>
+
+<body>
+    <!-- 5.2编程式导航参数规则
+    router.push()方法的参数规则
+    <script>
+    router.push('/home'),//字符串(路径名称)
+    router.push({path:'/home'})//对象
+    router.push({name:'user',params:{userId:123}})//命名的路由(传递参数)
+    router.push({path:'/register',query:{uname:'lisi'}})//带查询参数，变成/register?uname=lisi
+    </script> -->
+    <div id="app">
+        <router-link to="/user">user</router-link>
+        <router-link to="/register">register</router-link>
+        <router-view></router-view>
+    </div>
+    <script>
+        var user = {
+            template: `
+                <div>
+                    <h1>user</h1>
+                    <button @click='handle'>跳转到login页面</button>
+                </div>
+            `,
+            methods: {
+                handle: function () {
+                    //字符串(路径名称)
+                    // this.$router.push('/register')
+
+                    //对象
+                    // this.$router.push({path:'/register'})
+
+                    //命名的路由(传递参数)
+                    // this.$router.push({name:'登录',params:{name:'jjy',age:'26'}})
+                    // console.log(this.$route.params.name);//用来获取传过来的参数
+
+                    //带查询参数，变成/register?uname=lisi
+                    this.$router.push({path:'/login',query:{name:'小鞠女神',age:26}});
+                    // console.log(this.$route.query.name);//用来获取传过来的参数
+                }
+            }
+        }
+        var register = {
+            props:['name','age'],
+            template: `
+                <div>
+                    <h1>register{{name+'----'+age}}</h1>
+                    <button @click='handle'>后退</button>
+                </div>
+            `,
+            methods: {
+                handle: function () {
+                    this.$router.go(-2)
+                }
+            }
+        }
+        var login = {
+            props:['name','age'],
+            template: `
+                <div>
+                    <h1>login{{name+'----'+age}}</h1>
+                    <button @click='handle'>后退</button>
+                </div>
+            `,
+            methods: {
+                handle: function () {
+                    this.$router.go(-1)
+                }
+            }
+        }
+        const router = new VueRouter({
+            routes: [
+                {path:'/',component:user},
+                {path:'/user',component:user},
+
+                //query传参必须要在url地址login后面加上/:name$:age,【如果不加/:name$:age的话，页面数信数据会丢失】
+                {path:'/login/:age&:name',name:'登录',component:login,props:route=>({name:route.params.name,age:route.params.age})},
+
+                // query传参不需要在url地址login后面加上/?name$age
+                {path:'/login',component:login,props:route=>({name:route.query.name,age:route.query.age})},
+                {path:'/register',component:register,props:{name:'zzh',age:26}},
+            ]
+        })
+        var V = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            router
+        })
+    </script>
+</body>
+
+</html>

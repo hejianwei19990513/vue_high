@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+    <script src="../vue-router.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/user/1">user1</router-link>
+        <router-link to="/user/2">user2</router-link>
+        <router-link to="/user/3">user3</router-link>
+        <router-link to="/register">register</router-link>
+        <router-link to="/login/2">login</router-link>
+        <router-view></router-view>
+    </div>
+    <script>
+        var user = {
+            props:['id'],
+            template: `
+                    <h1>user主页{{id}}</h1>
+            `
+        }
+        var register = {
+            props:['name','age'],
+            template: `
+                    <h1>register主页-----{{name +'----' +age}}</h1>
+            `
+        }
+        var login = {
+            props:['name','age','id'],
+            template: `
+                    <h1>login主页-----{{name + '----'+age +'-----'+id}}</h1>
+            `
+        }
+        const router = new VueRouter({
+            routes: [
+                {path: '/', component: user },
+                // props匹配布尔值类型
+                {path: '/user/:id', component: user,props:true},
+
+                // props匹配对象类型
+                {path: '/register', component: register,props:{name:'jjy',age:26}},
+
+                // props匹配函数类型
+                {path: '/login/:id', component: login,props:route=>({name:'jjy',age:26,id:route.params.id})},
+            ]
+        })
+        var V = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            router
+        })
+    </script>
+</body>
+
+</html>

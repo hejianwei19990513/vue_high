@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    2通过单独的配置文件配置项目
+    在项目的跟目录创建文件vue.config.js在该文件中进行相关配置，从而覆盖默认配置
+    <script>
+        // vue.config.js
+        module.exports = {
+            devServer: {
+                open:true,
+                port: 8888
+            }
+        }
+    </script>
+</body>
+
+</html>

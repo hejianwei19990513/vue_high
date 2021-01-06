@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    1.安装vuex依赖包
+    npm install vuex --save
+    2.导入vuex包
+    import vuex from 'vuex'
+    vue.use (vuex)
+    3.创建store对象
+    <script>
+        const store = new vuex.Store({
+            //state中存放的就是全局共享的数据
+            state: { count: 0 }
+        })
+    </script>
+</body>
+
+</html>

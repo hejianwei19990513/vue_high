@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+    <script src="../vue-router.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/user">user</router-link>
+        <router-link to="/register">register</router-link>
+
+        <router-view></router-view>
+    </div>
+    <script>
+        var user = {
+            template: `
+                <div>
+                    <h1>user</h1>
+                    <router-link to="/tab1">tab1</router-link>
+                    <router-link to="/tab2">tab2</router-link>
+                    <router-view></router-view>
+                </div>
+            `
+        }
+        var register = {
+            template: `
+                <div>
+                    <h1>register</h1>
+                    <router-link to="/tab3">tab3</router-link>
+                    <router-link to="/tab4">tab4</router-link>
+                    <router-view></router-view>
+                </div>
+            `
+        }
+        var tab1 = {
+            template:`
+                <h2>tab1</h2>
+            `
+        }
+        var tab2 = {
+            template:`
+                <h2>tab2</h2>
+            `
+        }
+        var tab3 = {
+            template:`
+                <h2>tab3</h2>
+            `
+        }
+        var tab4 = {
+            template:`
+                <h2>tab4</h2>
+            `
+        }
+        const router = new VueRouter({
+            routes:[
+                {path:'/',redirect:'/user'},
+                {path:'/user',component:user,children:[
+                    {path:'/tab1',component:tab1},
+                    {path:'/tab2',component:tab2},
+                ]},
+                {path:'/register',component:user,children:[
+                    {path:'/tab3',component:tab1},
+                    {path:'/tab4',component:tab2},
+                ]},
+            ]
+        })
+        var V = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            router
+        })
+    </script>
+</body>
+
+</html>

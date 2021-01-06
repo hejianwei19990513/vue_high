@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+    <script src="../vue-router.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 命名路由只有这一个params的传参方法，并没有{path:'/register',query:{uname:'lisi'}}这个方法 -->
+        <router-link :to="{name:'用户1',params:{type:'女神'}}">这是命名路由</router-link>
+        <router-link to="/register/1">register</router-link>
+        <router-view></router-view>
+    </div>
+    <script>
+        var register = {
+            props:['name','age','type'],
+            template: `
+                    <h1>register主页-----{{name +'----' +age+'----'+type}}</h1>
+            `
+        }
+        const router = new VueRouter({
+            routes: [
+                {path: '/',redirect: '/register'},
+                // 命名路由
+                {path: '/register/:type',name:'用户1',component: register,props:route=>({name:'jjy',age:26,type:route.params.type})},
+            ]
+        })
+        var V = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            router
+        })
+    </script>
+</body>
+
+</html>
